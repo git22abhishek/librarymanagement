@@ -31,7 +31,6 @@ public class LibraryServiceImpl implements LibraryService {
     public Book returnBook(Long id) {
         Optional<Book> book = bookRepository.findById(id);
         if (book.isPresent() && book.get().isIssued()) {
-            book.get().setIssued(false);
             Book b = book.get();
             b.setIssued(false);
             b.setIssueDate(null);
