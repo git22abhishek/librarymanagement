@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @Builder
@@ -19,4 +21,6 @@ public class Book {
     private String title;
     private String author;
     private boolean isIssued;
+    private LocalDate issueDate;
+    private LocalDate dueDate;
 }

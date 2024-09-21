@@ -5,6 +5,7 @@ import com.shantanu.librarymanagement.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +18,11 @@ public class LibraryServiceImpl implements LibraryService {
     public Book issueBook(Long id) {
         Optional<Book> book = bookRepository.findById(id);
         if (book.isPresent() && !book.get().isIssued()) {
-            book.get().setIssued(true);
-            return bookRepository.save(book.get());
+            Book b = book.get();
+            b.setIssued(true);
+            b.setIssueDate(LocalDate.now());
+            b.setDueDate(LocalDate.now().plusDays(15L));
+            return bookRepository.save(b);
         }
         throw new RuntimeException("Book is not available");
     }
@@ -28,7 +32,11 @@ public class LibraryServiceImpl implements LibraryService {
         Optional<Book> book = bookRepository.findById(id);
         if (book.isPresent() && book.get().isIssued()) {
             book.get().setIssued(false);
-            return bookRepository.save(book.get());
+            Book b = book.get();
+            b.setIssued(false);
+            b.setIssueDate(null);
+            b.setDueDate(null);
+            return bookRepository.save(b);
         }
         throw new RuntimeException("Book was not issued");
     }

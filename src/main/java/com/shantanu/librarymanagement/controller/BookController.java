@@ -26,22 +26,12 @@ public class BookController {
 
     @PostMapping("/issue/{id}")
     public ResponseEntity<Book> issueBook(@PathVariable Long id) {
-        try {
-            Book issuedBook = libraryService.issueBook(id);
-            return new ResponseEntity<>(issuedBook, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(libraryService.issueBook(id));
     }
 
     @PostMapping("/return/{id}")
     public ResponseEntity<Book> returnBook(@PathVariable Long id) {
-        try {
-            Book returnedBook = libraryService.returnBook(id);
-            return new ResponseEntity<>(returnedBook, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(libraryService.returnBook(id));
     }
 
     @GetMapping("/search")
